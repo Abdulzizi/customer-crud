@@ -22,10 +22,10 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        <a class="nav-link" aria-current="page" href="{{ route('customers.index') }}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/create-customer">Create Customer</a>
+                        <a class="nav-link" href="{{ route('customers.create') }}">Create Customer</a>
                     </li>
                 </ul>
             </div>
@@ -56,12 +56,6 @@
         .navbar .nav-link:hover {
             color: #ffffff;
             /* Brighter color on hover */
-        }
-
-        .navbar .nav-link.active {
-            color: #ffc107;
-            /* Yellow for active link */
-            font-weight: bold;
         }
     </style>
 

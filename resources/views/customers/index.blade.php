@@ -8,7 +8,7 @@
                 <div class="card-header bg-light border-0">
                     <div class="row align-items-center">
                         <div class="col-md-3">
-                            <a href="/create-customer.html" class="btn btn-primary d-flex align-items-center">
+                            <a href="{{ route('customers.create') }}" class="btn btn-primary d-flex align-items-center">
                                 <i class="fas fa-plus me-2"></i> Create Customer
                             </a>
                         </div>
