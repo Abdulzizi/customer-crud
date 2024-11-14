@@ -21,42 +21,75 @@
                             <div class="col-md-12 mb-4">
                                 <div class="form-group">
                                     <label for="image" class="form-label">Profile Image</label>
-                                    <input type="file" class="form-control" id="image" name="image">
+                                    <input type="file" class="form-control @error('image') is-invalid @enderror"
+                                        id="image" name="image">
+                                    @error('image')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <div class="form-group">
                                     <label for="firstName" class="form-label">First Name</label>
-                                    <input type="text" class="form-control" id="firstName" name="firstName"
-                                        placeholder="Enter first name" required>
+                                    <input type="text" class="form-control @error('firstName') is-invalid @enderror"
+                                        id="firstName" name="firstName" placeholder="Enter first name"
+                                        value="{{ old('firstName') }}" required>
+                                    @error('firstName')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <div class="form-group">
                                     <label for="lastName" class="form-label">Last Name</label>
-                                    <input type="text" class="form-control" id="lastName" name="lastName"
-                                        placeholder="Enter last name" required>
+                                    <input type="text" class="form-control @error('lastName') is-invalid @enderror"
+                                        id="lastName" name="lastName" placeholder="Enter last name"
+                                        value="{{ old('lastName') }}" required>
+                                    @error('lastName')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <div class="form-group">
                                     <label for="email" class="form-label">Email</label>
-                                    <input type="email" class="form-control" id="email" name="email"
-                                        placeholder="Enter email" required>
+                                    <input type="email" class="form-control @error('email') is-invalid @enderror"
+                                        id="email" name="email" placeholder="Enter email" value="{{ old('email') }}"
+                                        required>
+                                    @error('email')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <div class="form-group">
                                     <label for="phone" class="form-label">Phone Number</label>
-                                    <input type="text" class="form-control" id="phone" name="phoneNumber"
-                                        placeholder="Enter phone number" required>
+                                    <input type="text" class="form-control @error('phoneNumber') is-invalid @enderror"
+                                        id="phone" name="phoneNumber" placeholder="Enter phone number"
+                                        value="{{ old('phoneNumber') }}" required>
+                                    @error('phoneNumber')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-12 mb-3">
                                 <div class="form-group">
                                     <label for="ban" class="form-label">Bank Account Number</label>
-                                    <input type="text" class="form-control" id="ban" name="bankNumber"
-                                        placeholder="Enter bank account number" required>
+                                    <input type="text" class="form-control @error('bankNumber') is-invalid @enderror"
+                                        id="ban" name="bankNumber" placeholder="Enter bank account number"
+                                        value="{{ old('bankNumber') }}" required>
+                                    @error('bankNumber')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <div class="form-group">
+                                    <label for="ban" class="form-label">About</label>
+                                    <textarea name="about" class="form-control @error('about') is-invalid @enderror">{{ old('about') }}</textarea>
+                                    @error('about')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-12 text-end">

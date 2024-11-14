@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CustomerStoreRequest;
 use Illuminate\Http\Request;
 
 class CustomerController extends Controller
@@ -25,14 +26,39 @@ class CustomerController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CustomerStoreRequest $request)
     {
+
+        // Check if an image was uploaded
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = $image->getClientOriginalName();
+            $imageSize = $image->getSize();
+            $imageMimeType = $image->getMimeType();
+        } else {
+            $imageName = null;
+            $imageSize = null;
+            $imageMimeType = null;
+        }
+
         return response()->json([
             'status' => true,
             'message' => 'Form submitted',
-            'data' => $request->all()
+            'data' => [
+                'firstName' => $request->input('firstName'),
+                'lastName' => $request->input('lastName'),
+                'email' => $request->input('email'),
+                'phoneNumber' => $request->input('phoneNumber'),
+                'bankNumber' => $request->input('bankNumber'),
+                'image' => [
+                    'name' => $imageName,
+                    'size' => $imageSize,
+                    'type' => $imageMimeType
+                ]
+            ]
         ]);
     }
+
 
     /**
      * Display the specified resource.
