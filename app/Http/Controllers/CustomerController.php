@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CustomerStoreRequest;
+use App\Models\Customer;
 use Illuminate\Http\Request;
 
 class CustomerController extends Controller
@@ -28,35 +29,9 @@ class CustomerController extends Controller
      */
     public function store(CustomerStoreRequest $request)
     {
+        Customer::create($request->only(['firstName', 'lastName', 'email', 'phoneNumber', 'bankNumber', 'about']));
 
-        // Check if an image was uploaded
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imageName = $image->getClientOriginalName();
-            $imageSize = $image->getSize();
-            $imageMimeType = $image->getMimeType();
-        } else {
-            $imageName = null;
-            $imageSize = null;
-            $imageMimeType = null;
-        }
-
-        return response()->json([
-            'status' => true,
-            'message' => 'Form submitted',
-            'data' => [
-                'firstName' => $request->input('firstName'),
-                'lastName' => $request->input('lastName'),
-                'email' => $request->input('email'),
-                'phoneNumber' => $request->input('phoneNumber'),
-                'bankNumber' => $request->input('bankNumber'),
-                'image' => [
-                    'name' => $imageName,
-                    'size' => $imageSize,
-                    'type' => $imageMimeType
-                ]
-            ]
-        ]);
+        return redirect()->route('home')->with('success', 'Customer created successfully.');
     }
 
 

@@ -1,6 +1,18 @@
 @extends('layouts.app')
 
 @section('content')
+    @if (session('success'))
+        <div class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true"
+            data-bs-delay="5000" style="position: fixed; top: 1rem; right: 1rem;">
+            <div class="d-flex">
+                <div class="toast-body">
+                    {{ session('success') }}
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                    aria-label="Close"></button>
+            </div>
+        </div>
+    @endif
     <div class="row justify-content-center mt-5">
         <div class="col-md-8">
             <h3 class="mb-4 text-center text-primary">Customers</h3>

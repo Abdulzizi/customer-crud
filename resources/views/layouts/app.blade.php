@@ -67,6 +67,14 @@
     <script src="{{ asset('assets/js/bootstrap.bundle.js') }}"></script>
     <script src="{{ asset('assets/js/fontawesome.js') }}"></script>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var toastEl = document.querySelector('.toast');
+            var toast = new bootstrap.Toast(toastEl);
+            toast.show();
+        });
+    </script>
+
 </body>
 
 </html>
