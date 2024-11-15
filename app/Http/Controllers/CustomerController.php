@@ -11,9 +11,30 @@ class CustomerController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('customers.index');
+        $query = Customer::query();
+
+        // searching
+        if ($request->has('search') && !empty($request->search)) {
+            $query->where(function ($query) use ($request) {
+                $query->where('firstName', 'like', '%' . $request->search . '%')
+                    ->orWhere('lastName', 'like', '%' . $request->search . '%')
+                    ->orWhere('email', 'like', '%' . $request->search . '%')
+                    ->orWhere('phoneNumber', 'like', '%' . $request->search . '%');
+            });
+        }
+
+        // sorting
+        if ($request->has('sort_by') && $request->sort_by == 'oldest') {
+            $query->orderBy('created_at', 'asc');
+        } else {
+            $query->orderBy('created_at', 'desc');
+        }
+
+        $customers = $query->get();
+        // dd($customers);
+        return view('customers.index', compact('customers'));
     }
 
     /**

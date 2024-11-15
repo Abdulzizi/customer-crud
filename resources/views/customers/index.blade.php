@@ -25,18 +25,23 @@
                             </a>
                         </div>
                         <div class="col-md-6">
-                            <form action="">
+                            <form action="{{ route('home') }}" method="GET">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Search customers...">
+                                    <input type="text" class="form-control" name="search"
+                                        value="{{ request('search') }}" placeholder="Search customers...">
                                     <button class="btn btn-outline-secondary" type="submit">Search</button>
                                 </div>
                             </form>
                         </div>
                         <div class="col-md-3">
-                            <select class="form-select">
-                                <option selected>Newest to Oldest</option>
-                                <option>Oldest to Newest</option>
-                            </select>
+                            <form action="{{ route('home') }}" method="GET">
+                                <select class="form-select" name="sort_by" onchange="this.form.submit()">
+                                    <option value="oldest" {{ request('sort_by') == 'oldest' ? 'selected' : '' }}>Oldest to
+                                        Newest</option>
+                                    <option value="newest" {{ request('sort_by') == 'newest' ? 'selected' : '' }}>Newest to
+                                        Oldest</option>
+                                </select>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -47,87 +52,33 @@
                                 <th scope="col">#</th>
                                 <th scope="col">First Name</th>
                                 <th scope="col">Last Name</th>
-                                <th scope="col">Date of Birth</th>
                                 <th scope="col">Phone Number</th>
                                 <th scope="col">Email</th>
-                                <th scope="col">BAN</th>
+                                <th scope="col">Bank Number</th>
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>John</td>
-                                <td>Doe</td>
-                                <td>7-7-2000</td>
-                                <td>881-6929-0200</td>
-                                <td>john@gmail.com</td>
-                                <td>1902982829282</td>
-                                <td>
-                                    <a href="#" class="text-info me-2"><i class="far fa-edit"></i></a>
-                                    <a href="/customer-details.html" class="text-primary me-2"><i
-                                            class="far fa-eye"></i></a>
-                                    <a href="#" class="text-danger"><i class="fas fa-trash-alt"></i></a>
-                                </td>
-                            </tr>
-                            <!-- Additional rows go here -->
+                            @foreach ($customers as $customer)
+                                <tr>
+                                    <th scope="row">{{ $customer->id }}</th>
+                                    <td>{{ $customer->firstName }}</td>
+                                    <td>{{ $customer->lastName }}</td>
+                                    <td>{{ $customer->phoneNumber }}</td>
+                                    <td>{{ $customer->email }}</td>
+                                    <td>{{ $customer->bankNumber }}</td>
+                                    <td>
+                                        <a href="#" class="text-info me-2"><i class="far fa-edit"></i></a>
+                                        <a href="/customer-details.html" class="text-primary me-2"><i
+                                                class="far fa-eye"></i></a>
+                                        <a href="#" class="text-danger"><i class="fas fa-trash-alt"></i></a>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
     </div>
-
-    <style>
-        /* Card and Table Styling */
-        .card {
-            border: none;
-            border-radius: 8px;
-        }
-
-        .table-striped tbody tr:nth-of-type(odd) {
-            background-color: #f8f9fa;
-        }
-
-        .table-hover tbody tr:hover {
-            background-color: #e9ecef;
-        }
-
-        /* Action Icon Styling */
-        .table td a {
-            font-size: 1.2rem;
-            transition: color 0.3s ease;
-        }
-
-        .table td a:hover {
-            color: #007bff !important;
-        }
-
-        /* Custom Button Styles */
-        .btn-primary {
-            background-color: #4a4ff7;
-            border: none;
-            transition: background-color 0.3s ease;
-        }
-
-        .btn-primary:hover {
-            background-color: #3c3dce;
-        }
-
-        .btn-outline-secondary {
-            border-color: #6c757d;
-            color: #6c757d;
-        }
-
-        .btn-outline-secondary:hover {
-            background-color: #6c757d;
-            color: white;
-        }
-
-        /* Select Styling */
-        .form-select {
-            border-radius: 4px;
-            padding: 0.375rem 1rem;
-        }
-    </style>
 @endsection
