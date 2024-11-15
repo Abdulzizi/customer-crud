@@ -29,11 +29,31 @@ class CustomerController extends Controller
      */
     public function store(CustomerStoreRequest $request)
     {
-        Customer::create($request->only(['firstName', 'lastName', 'email', 'phoneNumber', 'bankNumber', 'about']));
+        $customer = new Customer();
 
+        // Check if an image was uploaded
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+
+            // Store the file and get its path
+            $path = $image->store('/', 'public');
+            $filePath = 'uploads/' . $path;
+
+            $customer->image = $filePath;
+        }
+
+        $customer->firstName = $request->input('firstName');
+        $customer->lastName = $request->input('lastName');
+        $customer->email = $request->input('email');
+        $customer->phoneNumber = $request->input('phoneNumber');
+        $customer->bankNumber = $request->input('bankNumber');
+        $customer->about = $request->input('about');
+
+        $customer->save();
+
+        // Redirect with success message
         return redirect()->route('home')->with('success', 'Customer created successfully.');
     }
-
 
     /**
      * Display the specified resource.
