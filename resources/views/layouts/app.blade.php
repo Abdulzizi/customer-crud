@@ -12,25 +12,37 @@
 <body>
 
     <!-- Header -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm py-3">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm sticky-top">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="#">Customer Management</a>
+            <!-- Brand -->
+            <a class="navbar-brand fw-bold fs-4" href="{{ route('home') }}">
+                <i class="fas fa-users me-2"></i>Customer Management
+            </a>
+
+            <!-- Toggler for Mobile View -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+
+            <!-- Navbar Links -->
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="{{ route('customers.index') }}">Home</a>
+                        <a class="nav-link fw-semibold text-light" href="{{ route('home') }}">
+                            <i class="fas fa-home me-1"></i>Home
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('customers.create') }}">Create Customer</a>
+                        <a class="nav-link fw-semibold text-light" href="{{ route('customers.create') }}">
+                            <i class="fas fa-user-plus me-1"></i>Create Customer
+                        </a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
+
 
     <style>
         /* Header Styling */

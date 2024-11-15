@@ -89,15 +89,37 @@ class CustomerController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $customer = Customer::findOrFail($id);
+        return view('customers.edit', compact('customer'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(CustomerStoreRequest $request, string $id)
     {
-        //
+        $customer = Customer::findOrFail($id);
+
+        // Updating data
+        $customer->firstName = $request->input('firstName');
+        $customer->lastName = $request->input('lastName');
+        $customer->email = $request->input('email');
+        $customer->phoneNumber = $request->input('phoneNumber');
+        $customer->bankNumber = $request->input('bankNumber');
+        $customer->about = $request->input('about');
+
+        // handling image upload
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+
+            // Store the file and get its path
+            $path = $image->store('/', 'public');
+            $customer->image = 'uploads/' . $path;
+        }
+
+        $customer->save();
+
+        return redirect()->route('home')->with('success', 'Customer updated successfully');
     }
 
     /**
