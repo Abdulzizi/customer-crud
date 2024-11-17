@@ -1,19 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Home Page')
 @section('content')
-    @if (session('success'))
-        <div class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true"
-            data-bs-delay="5000" style="position: fixed; top: 1rem; right: 1rem;">
-            <div class="d-flex">
-                <div class="toast-body">
-                    {{ session('success') }}
-                </div>
-                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
-                    aria-label="Close"></button>
-            </div>
-        </div>
-    @endif
-
     <div class="row justify-content-center mt-5">
         <div class="col-md-8">
             <h3 class="mb-4 text-center text-primary">Customers</h3>
@@ -74,7 +62,8 @@
                                             <a href="{{ route('customers.edit', $customer->id) }}" class="text-info me-2">
                                                 <i class="far fa-edit"></i>
                                             </a>
-                                            <a href="/customer-details.html" class="text-primary me-2">
+                                            <a href="{{ route('customers.show', $customer->id) }}"
+                                                class="text-primary me-2">
                                                 <i class="far fa-eye"></i>
                                             </a>
                                             <a href="#" class="text-danger">
@@ -101,7 +90,8 @@
                                                 class="btn btn-outline-info btn-sm me-2">
                                                 <i class="far fa-edit"></i>
                                             </a>
-                                            <a href="/customer-details.html" class="btn btn-outline-primary btn-sm me-2">
+                                            <a href="{{ route('customers.show', $customer->id) }}"
+                                                class="btn btn-outline-primary btn-sm me-2">
                                                 <i class="far fa-eye"></i>
                                             </a>
                                             <a href="#" class="btn btn-outline-danger btn-sm">

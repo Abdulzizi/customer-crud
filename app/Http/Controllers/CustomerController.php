@@ -6,6 +6,8 @@ use App\Http\Requests\CustomerStoreRequest;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 
+use File;
+
 class CustomerController extends Controller
 {
     /**
@@ -26,10 +28,15 @@ class CustomerController extends Controller
         }
 
         // sorting
-        if ($request->has('sort_by') && $request->sort_by == 'oldest') {
-            $query->orderBy('created_at', 'asc');
+        if ($request->has('sort_by')) {
+            if ($request->sort_by == 'oldest') {
+                $query->orderBy('created_at', 'asc');
+            } else {
+                $query->orderBy('created_at', 'desc');
+            }
         } else {
-            $query->orderBy('created_at', 'desc');
+            // default = asc (oldest to newest)
+            $query->orderBy('created_at', 'asc');
         }
 
         $customers = $query->get();
@@ -72,8 +79,10 @@ class CustomerController extends Controller
 
         $customer->save();
 
+        session()->flash('successCreate', 'Create new customer was successful!');
+
         // Redirect with success message
-        return redirect()->route('home')->with('success', 'Customer created successfully.');
+        return redirect()->route('home');
     }
 
     /**
@@ -81,7 +90,8 @@ class CustomerController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $customer = Customer::findOrFail($id);
+        return view('customers.detail', compact('customer'));
     }
 
     /**
@@ -100,6 +110,18 @@ class CustomerController extends Controller
     {
         $customer = Customer::findOrFail($id);
 
+        // handling image upload
+        if ($request->hasFile('image')) {
+            // delete prev img
+            File::delete(public_path($customer->image));
+
+            $image = $request->file('image');
+
+            // Store the file and get its path
+            $path = $image->store('/', 'public');
+            $customer->image = 'uploads/' . $path;
+        }
+
         // Updating data
         $customer->firstName = $request->input('firstName');
         $customer->lastName = $request->input('lastName');
@@ -108,18 +130,11 @@ class CustomerController extends Controller
         $customer->bankNumber = $request->input('bankNumber');
         $customer->about = $request->input('about');
 
-        // handling image upload
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-
-            // Store the file and get its path
-            $path = $image->store('/', 'public');
-            $customer->image = 'uploads/' . $path;
-        }
-
         $customer->save();
 
-        return redirect()->route('home')->with('success', 'Customer updated successfully');
+        session()->flash('successUpdate', 'Update was successful!');
+
+        return redirect()->route('home');
     }
 
     /**
