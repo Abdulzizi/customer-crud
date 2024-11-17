@@ -30,7 +30,7 @@ class CustomerController extends Controller
 
         // Sorting
         $sortBy = $request->get('sort_by', 'oldest'); // Default to 'oldest' if not provided
-        $query->orderBy('created_at', $sortBy === 'oldest' ? 'asc' : 'desc');
+        $query->orderBy('id', $sortBy === 'oldest' ? 'asc' : 'desc');
 
         $customers = $query->get();
 
