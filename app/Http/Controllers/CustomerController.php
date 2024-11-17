@@ -142,6 +142,19 @@ class CustomerController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $customer = Customer::findOrFail($id);
+        $defaultImage = '/default-img/avatar.png';
+
+        // dd($customer->image, $defaultImage);
+
+        if ($customer->image && $customer->image !== $defaultImage) {
+            File::delete(public_path($customer->image));
+        }
+
+        $customer->delete();
+
+        session()->flash('successDelete', 'Delete was successful!');
+
+        return redirect()->route('customers.index');
     }
 }

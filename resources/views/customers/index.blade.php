@@ -66,9 +66,23 @@
                                                 class="text-primary me-2">
                                                 <i class="far fa-eye"></i>
                                             </a>
-                                            <a href="#" class="text-danger">
+
+                                            <a href="javascript:;" onclick="$('.form-{{ $customer->id }}').submit()"
+                                                class="text-danger me-2">
                                                 <i class="fas fa-trash-alt"></i>
                                             </a>
+
+                                            {{-- Delete --}}
+                                            <form class="form-{{ $customer->id }}"
+                                                action="{{ route('customers.destroy', $customer->id) }}" method="POST"
+                                                onsubmit="return confirm('Are you sure you want to delete this customer?')">
+                                                @csrf
+                                                @method('DELETE')
+
+                                                {{-- <button type="submit" class="text-danger btn border-0 bg-transparent">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </button> --}}
+                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach
