@@ -21,45 +21,127 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
 
 Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+# Customer Management System
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+A **Customer Management System** built using Laravel, featuring basic CRUD operations with added functionality for soft delete, search, sorting, and trash management.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Features
+1. **CRUD Operations**:
+   - Create, Read, Update, and Delete customers.
+   - Responsive interface for both desktop and mobile views.
 
-## Laravel Sponsors
+2. **Soft Delete**:
+   - Deleted customers are moved to a trash bin instead of being permanently removed.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+3. **Trash Management**:
+   - View soft-deleted customers.
+   - Restore customers from the trash.
+   - Permanently delete customers from the trash.
 
-### Premium Partners
+4. **Search and Sort**:
+   - Search customers by their name or email.
+   - Sort customers by creation date (oldest to newest or newest to oldest).
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+## Technologies Used
+- **Backend**: Laravel 10
+- **Frontend**: Blade templates, Bootstrap 5
+- **Database**: MySQL with Soft Delete enabled
 
-## Contributing
+## Installation
+Follow these steps to set up the project locally:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 1. Clone the Repository
+```bash
+git clone <repository-url>
+cd customer-crud
+```
 
-## Code of Conduct
+### 2. Install Dependencies
+```bash
+composer install
+npm install && npm run dev
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 3. Configure Environment
+- Duplicate `.env.example` and rename it to `.env`.
+- Update the `.env` file with your database credentials:
+  ```env
+  DB_CONNECTION=mysql
+  DB_HOST=127.0.0.1
+  DB_PORT=3306
+  DB_DATABASE=customer_crud
+  DB_USERNAME=root
+  DB_PASSWORD=
+  ```
 
-## Security Vulnerabilities
+### 4. Run Migrations
+```bash
+php artisan migrate
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 5. Seed the Database (Optional)
+```bash
+php artisan db:seed
+```
+
+### 6. Start the Server
+```bash
+php artisan serve
+```
+Access the app at [http://localhost:8000](http://localhost:8000).
+
+## Usage
+### Routes
+#### Customers
+| Method | URL                    | Description               |
+|--------|------------------------|---------------------------|
+| GET    | `/`                    | View all customers        |
+| GET    | `/customers/create`    | Create a new customer     |
+| POST   | `/customers`           | Store a new customer      |
+| GET    | `/customers/{id}/edit` | Edit customer details     |
+| PUT    | `/customers/{id}`      | Update customer details   |
+| DELETE | `/customers/{id}`      | Soft delete a customer    |
+
+#### Trash Management
+| Method | URL                              | Description                     |
+|--------|----------------------------------|---------------------------------|
+| GET    | `/customers/trash`              | View trashed customers          |
+| PATCH  | `/customers/{id}/restore`       | Restore a trashed customer      |
+| DELETE | `/customers/{id}/force-delete`  | Permanently delete a customer   |
+
+### Search and Sort
+- Use the search bar to find customers by their **first name**, **last name**, or **email**.
+- Use the sort dropdown to organize results by **creation date**.
+
+### Notifications
+- Success messages for actions like creating, updating, restoring, or deleting a customer.
+- Error messages for invalid operations.
+
+## Folder Structure
+- **app/Http/Controllers**:
+  - `CustomerController`: Handles all customer-related operations.
+- **app/Models**:
+  - `Customer`: Defines the `customers` table with soft delete enabled.
+- **resources/views**:
+  - `layouts/`: Contains the base layout.
+  - `customers/`: Includes views for listing, creating, editing, and managing trash.
+- **routes/web.php**:
+  - All customer-related routes are defined here.
+
+## Additional Notes
+- **Soft Delete**: Ensure the `deleted_at` column exists in the database table.
+- **Validation**: Input fields are validated using Laravel's request validation.
+
+## Future Enhancements
+- Pagination for customer lists.
+- Advanced filtering options (e.g., by date range or specific fields).
+- Export customer data to CSV or Excel.
+
+---
+
+If you discover a vulnerability within this project, please send issue and i will fix it right away.
 
 ## License
 
