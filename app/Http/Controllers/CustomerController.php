@@ -137,13 +137,10 @@ class CustomerController extends Controller
     public function destroy(string $id)
     {
         $customer = Customer::findOrFail($id);
-        $defaultImage = '/default-img/avatar.png';
 
         // dd($customer->image, $defaultImage);
 
-        if ($customer->image && $customer->image !== $defaultImage) {
-            File::delete(public_path($customer->image));
-        }
+
 
         $customer->delete();
 
@@ -154,6 +151,35 @@ class CustomerController extends Controller
 
     public function trashIndex()
     {
-        return view('customers.trash');
+        $trashedCustomers = Customer::onlyTrashed()->get();
+        return view('customers.trash', compact('trashedCustomers'));
+    }
+
+    public function trashRestore(string $id)
+    {
+        $customer = Customer::onlyTrashed()->findOrFail($id);
+
+        // Restore the customer
+        $customer->restore();
+
+        session()->flash('successRestored', 'Customer restored successfully!');
+
+        return redirect()->route('customers.index');
+    }
+
+    public function trashForceDelete(String $id)
+    {
+        $trashedCustomer = Customer::onlyTrashed()->findOrFail($id);
+        $defaultImage = '/default-img/avatar.png';
+
+        if ($trashedCustomer->image && $trashedCustomer->image !== $defaultImage) {
+            File::delete(public_path($trashedCustomer->image));
+        }
+
+        $trashedCustomer->forceDelete();
+
+        session()->flash('successPermanentDelete', 'Customer permanently deleted!');
+
+        return redirect()->route('customers.index');
     }
 }

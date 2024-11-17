@@ -97,7 +97,6 @@
                                                 <!-- Delete Form -->
                                                 <form class="form-{{ $customer->id }}"
                                                     action="{{ route('customers.destroy', $customer->id) }}" method="POST"
-                                                    onsubmit="return confirm('Are you sure you want to delete this customer?')"
                                                     style="display: none;">
                                                     @csrf
                                                     @method('DELETE')

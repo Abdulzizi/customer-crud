@@ -119,7 +119,7 @@
 
     <!-- Toasts -->
     <div class="toast-container">
-        @foreach (['successCreate', 'successUpdate', 'successDelete'] as $toast)
+        @foreach (['successCreate', 'successUpdate', 'successDelete', 'successRestored', 'successPermanentDelete'] as $toast)
             @if (session($toast))
                 <div class="toast-container position-fixed bottom-0 end-0 p-3">
                     <div class="toast show shadow-lg" role="alert" aria-live="assertive" aria-atomic="true"
