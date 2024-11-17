@@ -102,6 +102,11 @@
                             <i class="fas fa-user-plus me-1"></i>Create Customer
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-semibold text-light" href="{{ route('customers.trash') }}">
+                            <i class="fas fa-trash me-1"></i>Trash Data
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>

@@ -17,32 +17,26 @@ class CustomerController extends Controller
     {
         $query = Customer::query();
 
-        // searching
-        if ($request->has('search') && !empty($request->search)) {
-            $query->where(function ($query) use ($request) {
-                $query->where('firstName', 'like', '%' . $request->search . '%')
-                    ->orWhere('lastName', 'like', '%' . $request->search . '%')
-                    ->orWhere('email', 'like', '%' . $request->search . '%')
-                    ->orWhere('phoneNumber', 'like', '%' . $request->search . '%');
+        // Searching
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($query) use ($search) {
+                $query->where('firstName', 'like', "%{$search}%")
+                    ->orWhere('lastName', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%")
+                    ->orWhere('phoneNumber', 'like', "%{$search}%");
             });
         }
 
-        // sorting
-        if ($request->has('sort_by')) {
-            if ($request->sort_by == 'oldest') {
-                $query->orderBy('created_at', 'asc');
-            } else {
-                $query->orderBy('created_at', 'desc');
-            }
-        } else {
-            // default = asc (oldest to newest)
-            $query->orderBy('created_at', 'asc');
-        }
+        // Sorting
+        $sortBy = $request->get('sort_by', 'oldest'); // Default to 'oldest' if not provided
+        $query->orderBy('created_at', $sortBy === 'oldest' ? 'asc' : 'desc');
 
         $customers = $query->get();
-        // dd($customers);
+
         return view('customers.index', compact('customers'));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -156,5 +150,10 @@ class CustomerController extends Controller
         session()->flash('successDelete', 'Delete was successful!');
 
         return redirect()->route('customers.index');
+    }
+
+    public function trashIndex()
+    {
+        return view('customers.trash');
     }
 }
